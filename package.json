@@ -1,0 +1,7 @@
+{
+  "name": "test-task",
+  "dependencies": {
+    "go-async": "eldargab/go-async",
+    "easy-streaming": "eldargab/easy-streaming"
+  }
+}
