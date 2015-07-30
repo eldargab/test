@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const program = require('commander')
+
+program.option('-e, --getErrors', 'Print and clear the error registry')
+
+program.parse(process.argv)
+
+if (program.getErrors) {
+  require('go-async')(function*() {
+    let Client = require('../lib/redis/client')
+    let redis = new Client
+    let msg
+    while(msg = yield redis.lpop('errors')) {
+      console.log(msg)
+    }
+  }).get(function(err) {
+    if (err) throw err
+    process.exit()
+  })
+}
