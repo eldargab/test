@@ -3,21 +3,22 @@
 'use strict'
 
 const program = require('commander')
+const go = require('go-async')
+const proc = require('../lib/processes')
 
 program.option('-e, --getErrors', 'Print and clear the error registry')
 
 program.parse(process.argv)
 
-if (program.getErrors) {
-  require('go-async')(function*() {
-    let Client = require('../lib/redis/client')
-    let redis = new Client
-    let msg
-    while(msg = yield redis.lpop('errors')) {
-      console.log(msg)
-    }
-  }).get(function(err) {
-    if (err) throw err
+function run(p) {
+  go(p).get(function(err) {
+    if (err) console.error(err)
     process.exit()
   })
+}
+
+if (program.getErrors) {
+  run(proc.errorsDumper)
+} else {
+  run(proc.generator)
 }
