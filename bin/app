@@ -12,7 +12,7 @@ program.parse(process.argv)
 
 function run(p) {
   go(p).get(function(err) {
-    if (err) console.error(err)
+    if (err) console.error(err.stack)
     process.exit(err ? 1 : 0)
   })
 }
