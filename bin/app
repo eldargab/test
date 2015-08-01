@@ -13,12 +13,12 @@ program.parse(process.argv)
 function run(p) {
   go(p).get(function(err) {
     if (err) console.error(err)
-    process.exit()
+    process.exit(err ? 1 : 0)
   })
 }
 
 if (program.getErrors) {
   run(proc.errorsDumper)
 } else {
-  run(proc.generator)
+  run(proc.application)
 }
