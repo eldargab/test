@@ -8,6 +8,9 @@ run: redis
 crush:
 	@(make RATE=1000000 DELAY=0 run)
 
+performance:
+	@./bin/app -p
+
 errors:
 	@$(APP) --getErrors
 
@@ -20,4 +23,4 @@ kill:
 redis:
 	@(redis-server > /dev/null &)
 
-.PHONY: run errors redis kill crush
+.PHONY: run errors redis kill crush performance

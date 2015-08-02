@@ -14,6 +14,7 @@ function nat(val) {
 }
 
 program.option('-e, --getErrors', 'Print and clear the error registry')
+program.option('-p, --performance', 'Measure system performance')
 program.option('-w, --worker', 'Run a worker process')
 program.option('-r, --rate <msgs/sec>', 'Number of messages per second generator should yield (default 5)', nat)
 program.option('-d, --delay <ms>', 'Simulate message processing time for worker (default 500)', nat)
@@ -33,6 +34,8 @@ function run(p) {
 
 if (program.getErrors) {
   run(proc.errorsDumper)
+} else if (program.performance) {
+  run(proc.performance)
 } else if (program.worker) {
   run(proc.worker)
 } else {
