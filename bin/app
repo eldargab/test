@@ -15,9 +15,9 @@ function nat(val) {
 
 program.option('-e, --getErrors', 'Print and clear the error registry')
 program.option('-w, --worker', 'Run a worker process')
-program.option('-r, --rate <msgs/sec>', 'Number of messages per second generator should yield (default 10)', nat)
+program.option('-r, --rate <msgs/sec>', 'Number of messages per second generator should yield (default 5)', nat)
 program.option('-d, --delay <ms>', 'Simulate message processing time for worker (default 500)', nat)
-program.rate = 10
+program.rate = 5
 program.delay = 500
 
 program.parse(process.argv)
