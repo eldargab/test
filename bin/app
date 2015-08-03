@@ -39,5 +39,5 @@ if (program.getErrors) {
 } else if (program.worker) {
   run(proc.worker)
 } else {
-  run(proc.application)
+  run(proc.generator)
 }
