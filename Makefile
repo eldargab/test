@@ -5,14 +5,8 @@ DELAY ?= 500
 run: redis
 	@($(APP) -r $(RATE) -d $(DELAY) > app.log 2>&1 &)
 
-crush:
-	@(make RATE=1000000 DELAY=0 run)
-
-performance:
-	@./bin/app -p
-
-errors:
-	@$(APP) --getErrors
+redis:
+	@(redis-server --port 6379 --save "" > /dev/null &)
 
 kill:
 	@ps -A | grep $(APP) | grep -v grep | while read pid rest; \
@@ -20,7 +14,13 @@ kill:
 		kill $$pid ; \
 	done
 
-redis:
-	@(redis-server > /dev/null &)
+errors:
+	@$(APP) --getErrors
 
-.PHONY: run errors redis kill crush performance
+performance:
+	@./bin/app --performance
+
+crush:
+	@make DELAY=0 RATE=20000 run
+
+.PHONY: run redis kill errors performance crush
