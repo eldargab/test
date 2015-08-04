@@ -1,12 +1,12 @@
 ##Ключевые файлы
 
-  * [lib/processes.js](blob/master/lib/processes.js) - собственно, приложение
-  * [lib/redis/connection.js](blob/master/lib/redis/connection.js) - сокет-подобная абстракция поверх TCP
+  * [lib/processes.js](lib/processes.js) - собственно, приложение
+  * [lib/redis/connection.js](lib/redis/connection.js) - сокет-подобная абстракция поверх TCP
   для обмена сообщениями с redis
-  * [lib/redis/client.js](blob/master/lib/redis/client.js) - redis клиент
-  * [lib/redis/parser.js](blob/master/lib/redis/parser.js) - парсер для протокола redis
+  * [lib/redis/client.js](lib/redis/client.js) - redis клиент
+  * [lib/redis/parser.js](lib/redis/parser.js) - парсер для протокола redis
 
-##Структура
+##Принцип работы
 
 Логически, приложение разбито на три процесса - [generator](blob/master/lib/processes.js#L37),
 [spawner](blob/master/lib/processes.js#L76), [worker](blob/master/lib/processes.js#L11).
@@ -15,7 +15,7 @@
 
 Генерирует сообщения для обработки помещая их в лист `messages` (`RPUSH messages msg`).
 Отправка сообщений осуществляется командой `EVAL`, которая запускает серверный скрипт
-[push.lua](blob/master/lib/push.lua). Использование скрипта позволяет обеспечить
+[push.lua](lib/push.lua). Использование скрипта позволяет обеспечить
 строгую атомарность (требование не более одного генератора в приложении).
 
 ###spawner
@@ -139,7 +139,7 @@ go(function*() {
 Для парсера такая производительность неприемлема. В тоже время принципиально
 неприемлемым является усложнение кода приложения. В качестве решения можно попробовать упростить
 функцию, которая выполняет генератор, и оптимизровать её именно для парсинга.
-Что и было сделано [lib/redis/connection.js#L105](blob/master/lib/redis/connection.js#L105).
+Что и было [сделано](lib/redis/connection.js#L105).
 Производительность приложения в целом возрасла процентов на 15, однако, поскольку детальных
 тестов пока нет, судить о настоящей производительности такого парсера пока нельзя.
 
