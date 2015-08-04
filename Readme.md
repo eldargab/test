@@ -69,7 +69,7 @@ function* async() {
   return y
 }
 
-// мы в полне можем и так
+// мы вполне можем и так
 function* async() {
   let x = yield a()
   return b(x)
