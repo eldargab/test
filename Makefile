@@ -17,10 +17,13 @@ kill:
 errors:
 	@$(APP) --getErrors
 
+worker: redis
+	@($(APP) -w -d 0 > app.log 2>&1 &)
+
 performance:
 	@./bin/app --performance
 
 crush:
 	@make DELAY=0 RATE=20000 run
 
-.PHONY: run redis kill errors performance crush
+.PHONY: run redis kill errors worker performance crush
