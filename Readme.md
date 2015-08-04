@@ -8,8 +8,8 @@
 
 ##Принцип работы
 
-Логически, приложение разбито на три процесса - [generator](blob/master/lib/processes.js#L37),
-[spawner](blob/master/lib/processes.js#L76), [worker](blob/master/lib/processes.js#L11).
+Логически, приложение разбито на три процесса - [generator](lib/processes.js#L37),
+[spawner](lib/processes.js#L76), [worker](lib/processes.js#L11).
 
 ###generator
 
