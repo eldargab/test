@@ -3,7 +3,7 @@ RATE ?= 5
 DELAY ?= 500
 
 run: redis
-	@($(APP) -r $(RATE) -d $(DELAY) > app.log 2>&1 &)
+	@(iojs $(APP) -r $(RATE) -d $(DELAY) > app.log 2>&1 &)
 
 redis:
 	@(redis-server --port 6379 --save "" > /dev/null &)
@@ -15,13 +15,13 @@ kill:
 	done
 
 errors:
-	@$(APP) --getErrors
+	@iojs $(APP) --getErrors
 
 worker: redis
-	@($(APP) -w -d 0 > app.log 2>&1 &)
+	@(iojs $(APP) -w -d 0 > app.log 2>&1 &)
 
 performance:
-	@./bin/app --performance
+	@iojs ./bin/app --performance
 
 crush:
 	@make DELAY=0 RATE=20000 run
